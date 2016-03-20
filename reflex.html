@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="reflex.js"></script>
+	<script type="text/javascript">
+
+	var counter = 0;
+	var rarg1, rarg2;
+
+	var testFunction = function(arg1, arg2) {
+		counter++;
+		rarg1 = arg1;
+		rarg2 = arg2;
+	};
+
+	var testObj = {};
+	var testObj2 = new Date();
+
+	console.log('isFunction (yes): ', reflex(testFunction).isFunction());
+	console.log('isFunction (no): ', reflex(testObj).isFunction());
+	console.log('isFunction (no): ', reflex(testObj2).isFunction());
+
+	console.log('number of parameters (2): ', reflex(testFunction).params.count());
+	console.log('list parameters (arg1, args): ', reflex(testFunction).params.list())
+
+	reflex(testFunction).identity();
+	console.log('function should have been called: (1):', counter);
+	reflex(testFunction).fn();
+	console.log('function should have been called: (2):', counter);
+
+	var bound = reflex(testFunction).params.bind({
+		"arg1": "--arg1",
+		"arg2": "--arg2"
+	}).fn;
+
+	bound();
+
+	console.log('arg1 should be set (--arg1)', rarg1);
+	</script>
+</head>
+<body>
+
+</body>
+</html>
